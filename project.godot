@@ -12,12 +12,20 @@ config_version=5
 
 config/name="TiltFiveTools"
 run/main_scene="res://demo/main.tscn"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.png"
 
 [autoload]
 
-T5Interface="*res://addons/tiltfive/T5Interface.gd"
+T5Interface="*res://addons/tiltfive/T5Interface.cs"
+
+[debug]
+
+settings/stdout/verbose_stdout=true
+
+[dotnet]
+
+project/assembly_name="TiltFiveTools"
 
 [editor_plugins]
 

@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://cy1vbgijgvfb0" path="res://addons/tiltfive_tools/objects/spectator_camera.tscn" id="3_vyvts"]
 
 [node name="Main" instance=ExtResource("1_jgelf")]
-start_scene = "res://demo/main_menu/main_menu.tscn"
+StartScene = "res://demo/main_menu/main_menu.tscn"
 
 [node name="T5Manager" parent="." index="1"]
-glasses_scene = ExtResource("2_mbhmd")
+xrRigScene = ExtResource("2_mbhmd")
 
 [node name="SpectatorCamera" parent="." index="3" instance=ExtResource("3_vyvts")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-vertical = 3.0
-horizontal = 6.0
+Vertical = 3.0
+Horizontal = 6.0

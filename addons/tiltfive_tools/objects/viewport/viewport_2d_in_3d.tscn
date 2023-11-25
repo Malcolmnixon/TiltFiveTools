@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://0l6uvyibyfq7"]
 
-[ext_resource type="Script" path="res://addons/tiltfive_tools/objects/viewport/viewport_2d_in_3d.gd" id="1_xe5wg"]
-[ext_resource type="Script" path="res://addons/tiltfive_tools/objects/viewport/viewport_2d_in_3d_body.gd" id="2_36o6t"]
+[ext_resource type="Script" path="res://addons/tiltfive_tools/objects/viewport/T5ToolsViewport2Din3D.cs" id="1_8rlxr"]
+[ext_resource type="Script" path="res://addons/tiltfive_tools/objects/viewport/T5ToolsViewport2Din3DBody.cs" id="2_ejp6h"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_knvfo"]
 resource_local_to_scene = true
@@ -21,10 +21,10 @@ resource_local_to_scene = true
 size = Vector3(3, 2, 0.02)
 
 [node name="Viewport2Din3D" type="Node3D"]
-script = ExtResource("1_xe5wg")
-alpha_scissor_threshold = 0.25
-unshaded = false
-filter = true
+script = ExtResource("1_8rlxr")
+alpha_scissor_threshold = null
+unshaded = null
+filter = null
 
 [node name="Viewport" type="SubViewport" parent="."]
 disable_3d = true
@@ -39,8 +39,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_gkkvm")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 1048576
-script = ExtResource("2_36o6t")
-viewport_size = Vector2(300, 200)
+script = ExtResource("2_ejp6h")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01)

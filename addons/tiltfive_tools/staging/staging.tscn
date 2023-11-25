@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bsn1sd86p2h30"]
+[gd_scene load_steps=6 format=3 uid="uid://bsn1sd86p2h30"]
 
-[ext_resource type="Script" path="res://addons/tiltfive_tools/staging/staging.gd" id="1_vaiem"]
-[ext_resource type="Script" path="res://addons/tiltfive/T5Manager.gd" id="2_1ijo2"]
-[ext_resource type="PackedScene" uid="uid://d2gkfypplc1mt" path="res://addons/tiltfive_tools/staging/player.tscn" id="3_pw71e"]
+[ext_resource type="Script" path="res://addons/tiltfive_tools/staging/T5ToolsStaging.cs" id="1_x524t"]
+[ext_resource type="Script" path="res://addons/tiltfive/T5Manager.cs" id="2_1ijo2"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_soj17"]
 custom_aabb = AABB(-5000, -5000, -5000, 10000, 10000, 10000)
@@ -29,17 +28,13 @@ shader = SubResource("Shader_bwe5k")
 shader_parameter/alpha = 0.0
 
 [node name="Staging" type="Node3D"]
-script = ExtResource("1_vaiem")
+script = ExtResource("1_x524t")
 
 [node name="Fade" type="MeshInstance3D" parent="."]
 mesh = SubResource("QuadMesh_soj17")
 surface_material_override/0 = SubResource("ShaderMaterial_rf1gh")
 
-[node name="T5Manager" type="Node" parent="."]
+[node name="T5Manager" type="Node3D" parent="."]
 script = ExtResource("2_1ijo2")
-glasses_scene = ExtResource("3_pw71e")
 
 [node name="Scene" type="Node3D" parent="."]
-
-[connection signal="glasses_scene_was_added" from="T5Manager" to="." method="_on_player_scene_added"]
-[connection signal="glasses_scene_will_be_removed" from="T5Manager" to="." method="_on_player_scene_removed"]

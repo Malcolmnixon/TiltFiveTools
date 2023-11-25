@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://dbflj3atv64f8"]
 
-[ext_resource type="Script" path="res://demo/demo2_scene/objects/missile.gd" id="1_gk3rc"]
+[ext_resource type="Script" path="res://demo/demo2_scene/objects/Demo2Missile.cs" id="1_dktpx"]
 [ext_resource type="Texture2D" uid="uid://cv1ce55bwsnnw" path="res://demo/materials/lava.jpg" id="1_nm6p4"]
 [ext_resource type="AudioStream" uid="uid://c7hk1w0n7ywmd" path="res://demo/sounds/explosion.wav" id="3_fe22o"]
 
@@ -55,7 +55,7 @@ scale_curve = SubResource("CurveTexture_cv4no")
 color_ramp = SubResource("GradientTexture1D_8elqo")
 
 [node name="Missile" type="Node3D"]
-script = ExtResource("1_gk3rc")
+script = ExtResource("1_dktpx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 cast_shadow = 0

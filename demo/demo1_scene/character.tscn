@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cm6fdya8glspr"]
 
 [ext_resource type="PackedScene" uid="uid://co3lxjgp5ifh2" path="res://addons/tiltfive_tools/staging/character.tscn" id="1_cvjwm"]
-[ext_resource type="Script" path="res://demo/demo1_scene/character_body.gd" id="3_2cj5q"]
+[ext_resource type="Script" path="res://demo/demo1_scene/Demo1CharacterBody.cs" id="2_akva3"]
 [ext_resource type="Material" uid="uid://dgutg2a2y5i1u" path="res://demo/materials/rock_triplanar.tres" id="3_taor7"]
 [ext_resource type="AudioStream" uid="uid://b4vru7iyf8k8j" path="res://demo/sounds/hit.wav" id="4_b4if0"]
 [ext_resource type="AudioStream" uid="uid://saisv7mndt3c" path="res://demo/sounds/rolling.wav" id="4_s823o"]
@@ -19,7 +19,7 @@ collision_layer = 524288
 collision_mask = 524543
 max_contacts_reported = 4
 contact_monitor = true
-script = ExtResource("3_2cj5q")
+script = ExtResource("2_akva3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
 shape = SubResource("SphereShape3D_tmo6w")

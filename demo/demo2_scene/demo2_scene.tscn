@@ -21,17 +21,17 @@ ambient_light_color = Color(0.294118, 0.294118, 0.294118, 1)
 
 [node name="Ground" parent="Map" index="0" instance=ExtResource("2_u3mur")]
 
-[node name="EnemySpawn" parent="Map" index="1" node_paths=PackedStringArray("target") instance=ExtResource("3_ya7p6")]
+[node name="EnemySpawn" parent="Map" index="1" node_paths=PackedStringArray("Target") instance=ExtResource("3_ya7p6")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -2.4, 0, -1)
-target = NodePath("../Target")
+Target = NodePath("../Target")
 
-[node name="EnemySpawn2" parent="Map" index="2" node_paths=PackedStringArray("target") instance=ExtResource("3_ya7p6")]
+[node name="EnemySpawn2" parent="Map" index="2" node_paths=PackedStringArray("Target") instance=ExtResource("3_ya7p6")]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 2.4, 0, -1)
-target = NodePath("../Target")
+Target = NodePath("../Target")
 
-[node name="EnemySpawn3" parent="Map" index="3" node_paths=PackedStringArray("target") instance=ExtResource("3_ya7p6")]
+[node name="EnemySpawn3" parent="Map" index="3" node_paths=PackedStringArray("Target") instance=ExtResource("3_ya7p6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.1)
-target = NodePath("../Target")
+Target = NodePath("../Target")
 
 [node name="Target" type="MeshInstance3D" parent="Map" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.4)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dkjxuanprob03"]
 
-[ext_resource type="Script" path="res://demo/main_menu/main_menu_2d.gd" id="1_x3j2v"]
+[ext_resource type="Script" path="res://demo/main_menu/MainMenu2D.cs" id="1_o3rt2"]
 [ext_resource type="Texture2D" uid="uid://crovglpkjvq4f" path="res://demo/materials/border.png" id="2_6hykq"]
 
 [node name="MainMenu2D" type="Control"]
@@ -10,7 +10,7 @@ offset_right = 300.0
 offset_bottom = 200.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_x3j2v")
+script = ExtResource("1_o3rt2")
 
 [node name="Background" type="NinePatchRect" parent="."]
 layout_mode = 1
@@ -99,8 +99,8 @@ layout_mode = 2
 text = "Quit
 "
 
-[connection signal="pressed" from="Margin/VBoxContainer/Demo12/Demo1" to="." method="_on_demo_pressed" binds= [1]]
-[connection signal="pressed" from="Margin/VBoxContainer/Demo12/Demo2" to="." method="_on_demo_pressed" binds= [2]]
-[connection signal="pressed" from="Margin/VBoxContainer/Demo34/Demo3" to="." method="_on_demo_pressed" binds= [3]]
-[connection signal="pressed" from="Margin/VBoxContainer/Demo34/Demo4" to="." method="_on_demo_pressed" binds= [4]]
-[connection signal="pressed" from="Margin/VBoxContainer/Quit/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Margin/VBoxContainer/Demo12/Demo1" to="." method="OnDemoPressed" binds= [1]]
+[connection signal="pressed" from="Margin/VBoxContainer/Demo12/Demo2" to="." method="OnDemoPressed" binds= [2]]
+[connection signal="pressed" from="Margin/VBoxContainer/Demo34/Demo3" to="." method="OnDemoPressed" binds= [3]]
+[connection signal="pressed" from="Margin/VBoxContainer/Demo34/Demo4" to="." method="OnDemoPressed" binds= [4]]
+[connection signal="pressed" from="Margin/VBoxContainer/Quit/Quit" to="." method="OnQuitPressed"]

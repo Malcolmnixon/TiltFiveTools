@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bfxa4y4qa6l67"]
 
-[ext_resource type="Script" path="res://addons/tiltfive_tools/functions/pointer.gd" id="1_m1tpg"]
+[ext_resource type="Script" path="res://addons/tiltfive_tools/functions/T5ToolsPointer.cs" id="1_liqxc"]
 [ext_resource type="Shader" path="res://addons/tiltfive_tools/functions/pointer.gdshader" id="5_fnea0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kby4w"]
@@ -35,7 +35,7 @@ radial_segments = 12
 rings = 6
 
 [node name="Pointer" type="Node3D"]
-script = ExtResource("1_m1tpg")
+script = ExtResource("1_liqxc")
 
 [node name="RayCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0, 0)

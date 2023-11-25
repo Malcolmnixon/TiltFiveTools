@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxarqaa2wmcuf"]
 
+[ext_resource type="Script" path="res://demo/player/PopupMenu.cs" id="1_0yybi"]
 [ext_resource type="Texture2D" uid="uid://crovglpkjvq4f" path="res://demo/materials/border.png" id="1_pulmi"]
-[ext_resource type="Script" path="res://demo/player/popup_menu.gd" id="1_tf4ol"]
 
 [node name="PopupMenu" type="Control"]
 layout_mode = 3
@@ -10,7 +10,7 @@ offset_right = 300.0
 offset_bottom = 150.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_tf4ol")
+script = ExtResource("1_0yybi")
 
 [node name="Border" type="NinePatchRect" parent="."]
 layout_mode = 1
@@ -68,5 +68,5 @@ layout_mode = 2
 text = "Quit
 "
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="OnBackPressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Quit" to="." method="OnQuitPressed"]

@@ -13,9 +13,11 @@ ambient_light_color = Color(0.294118, 0.294118, 0.294118, 1)
 
 [node name="Screen" parent="." index="0" instance=ExtResource("2_8u0ar")]
 transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, -0.4, 0)
-scene = ExtResource("3_s11b2")
-update_mode = 2
-unshaded = true
+AlphaScissorThreshold = 0.25
+Unshaded = true
+Filter = null
+Scene = ExtResource("3_s11b2")
+UpdateMode = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="1"]
 environment = SubResource("Environment_3m4fl")
