@@ -272,22 +272,4 @@ public partial class T5ToolsStaging : Node3D
     {
         Instance?.DoLoadScene(scenePath, userData);
     }
-
-    /// <summary>
-    /// Get the next free player number
-    /// </summary>
-    /// <returns>Player 0..3 or -1 if none available</returns>
-    public int NextFreePlayerNumber()
-    {
-        // Check if player numbers 0..3 are available for use
-        for (var n = 0; n < 4; n++)
-        {
-            if (Players.TrueForAll(p => p.PlayerNumber != n))
-                return n;
-        }
-
-        // Warn and return an invalid player
-        GD.PushWarning("Players 0..3 already assigned. No ID for new player");
-        return -1;
-    }
 }

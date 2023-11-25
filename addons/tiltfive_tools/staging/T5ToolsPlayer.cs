@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 #nullable enable
@@ -13,6 +15,11 @@ using Godot;
 /// </description>
 public partial class T5ToolsPlayer : T5XRRig
 {
+	/// <summary>
+	/// All players list
+	/// </summary>
+	private static readonly List<T5ToolsPlayer> _players = new();
+
 	// Visible layers
 	private uint _visibleLayers = 5;
 	
@@ -45,7 +52,28 @@ public partial class T5ToolsPlayer : T5XRRig
     public override void _EnterTree()
     {
         base._EnterTree();
-		_playerNumber = T5ToolsStaging.Instance?.NextFreePlayerNumber() ?? -1;
+
+		// Assign the next free player number
+		for (var n = 0; n < 4; ++n)
+			if (_players.All(p => p._playerNumber != n))
+			{
+				_playerNumber = n;
+				break;
+			}
+
+		// Save as a player
+		_players.Add(this);
+    }
+
+	/// <summary>
+	/// Called when the node is about to leave the scene tree
+	/// </summary>
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+		// Remove from the list of players
+		_players.Remove(this);
     }
 
     /// <summary>
