@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
-
-#nullable enable
 
 /// <summary>
 /// Tilt Five Tools Player Node
@@ -119,7 +116,7 @@ public partial class T5ToolsPlayer : T5XRRig
 	/// </summary>
 	/// <param name="node">Node to search</param>
 	/// <returns>Player instance or null</returns>
-	public static T5ToolsPlayer? FindInstance(Node node)
+	public static T5ToolsPlayer FindInstance(Node node)
 	{
 		// Search the ancestors for a player node
 		while (node != null)

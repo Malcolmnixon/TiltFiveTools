@@ -1,7 +1,4 @@
-using System;
 using Godot;
-
-#nullable enable
 
 /// <summary>
 /// Tilt Five Tools Controller Script for CharacterBody3D
@@ -123,17 +120,17 @@ public partial class T5ToolsCharacterBodyController : CharacterBody3D
     /// <summary>
     /// Player node
     /// </summary>
-    private T5ToolsPlayer? _player;
+    private T5ToolsPlayer _player;
 
     /// <summary>
     /// Origin node
     /// </summary>
-    private T5OriginCS? _origin;
+    private T5OriginCS _origin;
 
     /// <summary>
     /// Camera node
     /// </summary>
-    private T5CameraCS? _camera;
+    private T5CameraCS _camera;
 
     /// <summary>
     /// Movement state
@@ -213,15 +210,15 @@ public partial class T5ToolsCharacterBodyController : CharacterBody3D
     public override void _Ready()
     {
         // Get the player
-        _player = T5ToolsCharacter.FindInstance(this)?.Player;
-        _origin = _player?.Origin;
-        _camera = _player?.Camera;
+        _player = T5ToolsCharacter.FindInstance(this).Player;
+        _origin = _player.Origin;
+        _camera = _player.Camera;
 
         // Subscribe to player wand events
-        var controller = _player?.Wand(0);
-        controller?.Connect("button_pressed", Callable.From((StringName name) => OnButtonPressed(name)));
-        controller?.Connect("button_released", Callable.From((StringName name) => OnButtonReleased(name)));
-        controller?.Connect("input_vector2_changed", Callable.From((StringName name, Vector2 value) => OnInputVector2Changed(name, value)));
+        var controller = _player.Wand;
+        controller.Connect("button_pressed", Callable.From((StringName name) => OnButtonPressed(name)));
+        controller.Connect("button_released", Callable.From((StringName name) => OnButtonReleased(name)));
+        controller.Connect("input_vector2_changed", Callable.From((StringName name, Vector2 value) => OnInputVector2Changed(name, value)));
     }
 
     /// <summary>
@@ -230,7 +227,7 @@ public partial class T5ToolsCharacterBodyController : CharacterBody3D
     /// <param name="delta">Delta since previous process in seconds</param>
     public override void _Process(double delta)
     {
-        if (CenterCharacter && _origin != null)
+        if (CenterCharacter)
             _origin.GlobalPosition = GlobalPosition + CenterOffset;
     }
 
@@ -402,7 +399,7 @@ public partial class T5ToolsCharacterBodyController : CharacterBody3D
         }
 
         // Translate to reference frame
-        if (ControlReference == ControlReferenceMode.Player && _camera != null)
+        if (ControlReference == ControlReferenceMode.Player)
         {
             // Get the frame Z vector (to-player, horizontal, normalized)
             var frameZ = (_camera.GlobalPosition - GlobalPosition).Slide(Vector3.Up).Normalized();

@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Godot;
-
-#nullable enable
 
 [Tool]
 public partial class T5ToolsSceneSwitchArea : Area3D

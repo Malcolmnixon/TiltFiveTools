@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-#nullable enable
-
 [Tool]
 public partial class T5ToolsPointer : Node3D
 {
@@ -128,12 +126,12 @@ public partial class T5ToolsPointer : Node3D
     /// <summary>
     /// Player
     /// </summary>
-    private T5ToolsPlayer? _player;
+    private T5ToolsPlayer _player;
 
     /// <summary>
     /// Controller
     /// </summary>
-    private T5ControllerCS? _controller;
+    private T5ControllerCS _controller;
 
     /// <summary>
     /// Valid mask including player
@@ -143,12 +141,12 @@ public partial class T5ToolsPointer : Node3D
     /// <summary>
     /// Locked target
     /// </summary>
-    private Node3D? _lockedTarget;
+    private Node3D _lockedTarget;
 
     /// <summary>
     /// Last target
     /// </summary>
-    private Node3D? _lastTarget;
+    private Node3D _lastTarget;
 
     /// <summary>
     /// Last valid
@@ -168,37 +166,37 @@ public partial class T5ToolsPointer : Node3D
     /// <summary>
     /// RayCast node
     /// </summary>
-    private RayCast3D? _rayCast;
+    private RayCast3D _rayCast;
 
     /// <summary>
     /// Arc Mesh instance
     /// </summary>
-    private MeshInstance3D? _arcMesh;
+    private MeshInstance3D _arcMesh;
 
     /// <summary>
     /// Arc cylinder mesh
     /// </summary>
-    private CylinderMesh? _arcCylinderMesh;
+    private CylinderMesh _arcCylinderMesh;
 
     /// <summary>
     /// Arc material
     /// </summary>
-    private ShaderMaterial? _arcMaterial;
+    private ShaderMaterial _arcMaterial;
 
     /// <summary>
     /// Target mesh instance
     /// </summary>
-    private MeshInstance3D? _targetMesh;
+    private MeshInstance3D _targetMesh;
 
     /// <summary>
     /// Target sphere mesh
     /// </summary>
-    private SphereMesh? _targetSphereMesh;
+    private SphereMesh _targetSphereMesh;
 
     /// <summary>
     /// Target material
     /// </summary>
-    private StandardMaterial3D? _targetMaterial;
+    private StandardMaterial3D _targetMaterial;
 
     /// <summary>
     /// Pointer length
@@ -346,9 +344,9 @@ public partial class T5ToolsPointer : Node3D
         _arcMesh = GetNode<MeshInstance3D>("Arc");
         _arcMaterial = _arcMesh.MaterialOverride as ShaderMaterial;
         _targetMesh = GetNode<MeshInstance3D>("Target");
-        _targetMaterial = _targetMesh?.MaterialOverride as StandardMaterial3D;
-        _arcCylinderMesh = _arcMesh?.Mesh as CylinderMesh;
-        _targetSphereMesh = _targetMesh?.Mesh as SphereMesh;
+        _targetMaterial = _targetMesh.MaterialOverride as StandardMaterial3D;
+        _arcCylinderMesh = _arcMesh.Mesh as CylinderMesh;
+        _targetSphereMesh = _targetMesh.Mesh as SphereMesh;
 
         // Handle visibility changes
         VisibilityChanged += UpdateEnabled;
@@ -358,8 +356,8 @@ public partial class T5ToolsPointer : Node3D
 
         // Get the parent wand controller
         _controller = GetParent<T5ControllerCS>();
-        _controller?.Connect("button_pressed", Callable.From((StringName name) => OnButtonPressed(name)));
-        _controller?.Connect("button_released", Callable.From((StringName name) => OnButtonReleased(name)));
+        _controller.Connect("button_pressed", Callable.From((StringName name) => OnButtonPressed(name)));
+        _controller.Connect("button_released", Callable.From((StringName name) => OnButtonReleased(name)));
 
         // Update the pointer
         UpdateEnabled();
@@ -410,20 +408,20 @@ public partial class T5ToolsPointer : Node3D
         }
 
         // Find the new target
-        Node3D? newTarget = null;
+        Node3D newTarget = null;
         var newValid = false;
         var newAt = Vector3.Zero;
-        if (_enabled && (_controller?.Call("get_is_active").AsBool() ?? false) && (_rayCast?.IsColliding() ?? false))
+        if (_enabled && _controller.Call("get_is_active").AsBool() && _rayCast.IsColliding())
         {
             // Get the ray cast collision
             newAt = _rayCast.GetCollisionPoint();
             newTarget = _lockedTarget ?? _rayCast.GetCollider() as Node3D;
 
             // Clear if not valid
-            if (!GodotObject.IsInstanceValid(newTarget))
-                newTarget = null;
+            if (newTarget != null && GodotObject.IsInstanceValid(newTarget))
+                newValid = (newTarget.Get("collision_layer").As<uint>() & _playerValidMask) != 0U;
             else
-                newValid = (newTarget?.Get("collision_layer").As<uint>() & _playerValidMask) != 0U;
+                newTarget = null;
         }
 
         // Skip if no current and previous targets
@@ -632,15 +630,11 @@ public partial class T5ToolsPointer : Node3D
     private void UpdateVisibleLayers()
     {
         // Calculate the visible layers (including the player)
-        var layers = _visibleLayers;
-        if (_player != null)
-            layers |= _player.GetPlayerVisibleLayer();
+        var layers = _visibleLayers | (_player?.GetPlayerVisibleLayer() ?? 0U);
 
         // Set the mesh visible layers
-        if (_arcMesh != null)
-            _arcMesh.Layers = layers;
-        if (_targetMesh != null)
-            _targetMesh.Layers = layers;
+        _arcMesh.Layers = layers;
+        _targetMesh.Layers = layers;
     }
 
     /// <summary>
@@ -648,10 +642,6 @@ public partial class T5ToolsPointer : Node3D
     /// </summary>
     private void UpdateRay()
     {
-        // Skip if no ray cast
-        if (_rayCast == null)
-            return;
-
         _rayCast.RotationDegrees = _rayCast.RotationDegrees with { X = -_angle };
         _rayCast.TargetPosition = _rayCast.TargetPosition with { Z = -_length };
         UpdateArc();
@@ -662,10 +652,6 @@ public partial class T5ToolsPointer : Node3D
     /// </summary>
     private void UpdateArc()
     {
-        // Skip if no arc cylinder mesh
-        if (_arcCylinderMesh == null)
-            return;
-
         // Update cylinder
         _arcCylinderMesh.TopRadius = _arcRadius;
         _arcCylinderMesh.BottomRadius = _arcRadius;
@@ -682,10 +668,6 @@ public partial class T5ToolsPointer : Node3D
     /// </summary>
     private void UpdateTarget()
     {
-        // Skip if no target objects
-        if (_targetSphereMesh == null || _targetMaterial == null)
-            return;
-
         // Update sphere
         _targetSphereMesh.Radius = _targetRadius;
         _targetSphereMesh.Height = _targetRadius * 2.0f;
@@ -697,10 +679,6 @@ public partial class T5ToolsPointer : Node3D
     /// </summary>
     private void UpdateCollision()
     {
-        // Skip if no ray cast
-        if (_rayCast == null)
-            return;
-
         // Get the player-specific layer
         var playerLayer = _player?.GetPlayerPhysicsLayer() ?? 0U;
 
@@ -787,11 +765,8 @@ public partial class T5ToolsPointer : Node3D
     private void VisibleHit(bool valid, Vector3 at)
     {
         // Show the target
-        if (_targetMesh != null)
-        {
-            _targetMesh.GlobalPosition = at;
-            _targetMesh.Visible = valid;
-        }
+        _targetMesh.GlobalPosition = at;
+        _targetMesh.Visible = valid;
 
         // Update the arc
         UpdateArcActiveColor(valid);
@@ -805,8 +780,7 @@ public partial class T5ToolsPointer : Node3D
     private void VisibleMove(Vector3 at)
     {
         // Update the target
-        if (_targetMesh != null)
-            _targetMesh.GlobalPosition = at;
+        _targetMesh.GlobalPosition = at;
         
         // Update the arc
         UpdateArcCurve(at);
@@ -818,8 +792,7 @@ public partial class T5ToolsPointer : Node3D
     private void VisibleMiss()
     {
         // Update the target
-        if (_targetMesh != null)
-            _targetMesh.Visible = false;
+        _targetMesh.Visible = false;
 
         // Calculate a fake "at" vector
         var at = _rayCast?.ToGlobal(new Vector3(0, 0, -_length)) ?? Vector3.Zero;
@@ -835,10 +808,6 @@ public partial class T5ToolsPointer : Node3D
     /// <param name="at">Curve target</param>
     private void UpdateArcCurve(Vector3 at)
     {
-        // Skip if invalid objects
-        if (_rayCast == null || _arcMesh == null || _arcMaterial == null)
-            return;
-
         var rayCastTransform = _rayCast.GlobalTransform;
         var distance = at.DistanceTo(rayCastTransform.Origin);
 

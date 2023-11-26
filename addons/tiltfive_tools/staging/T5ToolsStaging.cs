@@ -3,8 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 
-#nullable enable
-
 /// <summary>
 /// Tilt Five Tools Staging Base
 /// </summary>
@@ -79,27 +77,27 @@ public partial class T5ToolsStaging : Node3D
     /// <summary>
     /// The current scene
     /// </summary>
-    public T5ToolsScene? CurrentScene { get; private set; }
+    public T5ToolsScene CurrentScene { get; private set; }
 
     /// <summary>
     /// The fade tween
     /// </summary>
-    private Tween? _fadeTween;
+    private Tween _fadeTween;
 
     /// <summary>
     /// Fade mesh
     /// </summary>
-    private MeshInstance3D? _fadeMesh;
+    private MeshInstance3D _fadeMesh;
 
     /// <summary>
     /// Node to hold scenes
     /// </summary>
-    private Node3D? _scene;
+    private Node3D _scene;
 
     /// <summary>
     /// Instance of the staging
     /// </summary>
-    public static T5ToolsStaging? Instance { get; private set; }
+    public static T5ToolsStaging Instance { get; private set; }
 
     /// <summary>
     /// Called when the node enters the scene tree for the first time.
@@ -140,11 +138,8 @@ public partial class T5ToolsStaging : Node3D
 
         // Connect T5Manager signals
         var manager = GetNode<T5Manager>("T5Manager");
-        if (manager != null)
-        {
-            manager.XRRigWasAdded += OnXRRigWasAdded;
-            manager.XRRigWillBeRemoved += OnXRRigWillBeRemoved;
-        }
+        manager.XRRigWasAdded += OnXRRigWasAdded;
+        manager.XRRigWillBeRemoved += OnXRRigWillBeRemoved;
 
         // Start by loading the start scene
         if (!string.IsNullOrEmpty(StartScene))
@@ -181,7 +176,7 @@ public partial class T5ToolsStaging : Node3D
 
             // Discard the current scene
             GD.Print("T5ToolsStaging: Discarding old scene");
-            _scene?.RemoveChild(CurrentScene);
+            _scene.RemoveChild(CurrentScene);
             CurrentScene.QueueFree();
             CurrentScene = null;
 
@@ -198,7 +193,7 @@ public partial class T5ToolsStaging : Node3D
         // Instantiate the scene
         GD.Print("T5ToolsStaging: Instantiating new scene");
         CurrentScene = newScene.Instantiate<T5ToolsScene>();
-        _scene?.AddChild(CurrentScene);
+        _scene.AddChild(CurrentScene);
 
         // Report the new scene is loaded
         GD.Print("T5ToolsStaging: Reporting SceneLoaded");
@@ -220,10 +215,6 @@ public partial class T5ToolsStaging : Node3D
 
     private void SetFade(float fade)
     {
-        // Skip if no fade mesh
-        if (_fadeMesh == null)
-            return;
-
         if (fade <= 0.0f)
         {
             _fadeMesh.Visible = false;
@@ -266,6 +257,6 @@ public partial class T5ToolsStaging : Node3D
     /// <param name="userData">Custom data</param>
     public static void LoadScene(string scenePath, Variant userData = new())
     {
-        Instance?.DoLoadScene(scenePath, userData);
+        Instance.DoLoadScene(scenePath, userData);
     }
 }

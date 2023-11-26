@@ -100,14 +100,7 @@ public partial class T5Interface : Node
 		
 		xrInterface.Call("start_display", glassesID, xrRig, xrRig.Origin);
 		xrRig.Camera.Tracker = $"/user/{glassesID}/head";
-		for(int i = 0; i < 4; i++)
-		{
-			var wand = xrRig.Wand(i);
-			if (wand != null)
-			{
-				wand.Tracker = $"/user/{glassesID}/wand_{i + 1}";
-			}
-		}
+		xrRig.Wand.Tracker = $"/user/{glassesID}/wand_1";
 	}
 
 	void ProcessGlasses()

@@ -2,8 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-#nullable enable
-
 public partial class T5ToolsScene : Node3D
 {
     /// <summary>
@@ -59,7 +57,7 @@ public partial class T5ToolsScene : Node3D
     /// Character scene
     /// </summary>
     [Export]
-    public PackedScene? CharacterScene { get; set; }
+    public PackedScene CharacterScene { get; set; }
 
     /// <summary>
     /// How close to spawn characters
@@ -234,7 +232,7 @@ public partial class T5ToolsScene : Node3D
     /// </summary>
     /// <param name="player">Player</param>
     /// <returns>Character or null</returns>
-    public T5ToolsCharacter? GetPlayerCharacter(T5ToolsPlayer player)
+    public T5ToolsCharacter GetPlayerCharacter(T5ToolsPlayer player)
     {
         // Find the character
         return Characters.Find(c => c.Player == player);
@@ -244,7 +242,7 @@ public partial class T5ToolsScene : Node3D
     /// Get the current scene
     /// </summary>
     /// <returns>Current scene or null</returns>
-    public static T5ToolsScene? GetCurrent()
+    public static T5ToolsScene GetCurrent()
     {
         // If we have an active stage then query it for the current scene
         return T5ToolsStaging.Instance?.CurrentScene;

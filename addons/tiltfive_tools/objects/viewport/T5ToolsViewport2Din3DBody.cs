@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-#nullable enable
-
 [Tool]
 public partial class T5ToolsViewport2Din3DBody : StaticBody3D
 {
@@ -33,12 +31,12 @@ public partial class T5ToolsViewport2Din3DBody : StaticBody3D
     /// <summary>
     /// Viewport node
     /// </summary>
-    private Viewport? _viewport;
+    private Viewport _viewport;
 
     /// <summary>
     /// Collision shape
     /// </summary>
-    private CollisionShape3D? _collisionShape;
+    private CollisionShape3D _collisionShape;
 
     /// <summary>
     /// Dictionary of pointers to touch-index
@@ -53,12 +51,12 @@ public partial class T5ToolsViewport2Din3DBody : StaticBody3D
     /// <summary>
     /// Dominant pointer (index == 0)
     /// </summary>
-    private Node3D? _dominant;
+    private Node3D _dominant;
 
     /// <summary>
     /// Mouse pointer
     /// </summary>
-    private Node3D? _mouse;
+    private Node3D _mouse;
 
     /// <summary>
     /// Last mouse position
@@ -84,9 +82,6 @@ public partial class T5ToolsViewport2Din3DBody : StaticBody3D
     /// <returns>Screen X/Y position</returns>
     public Vector2 GlobalToViewport(Vector3 at)
     {
-        if (_collisionShape == null)
-            return Vector2.Zero;
-
         // Convert to local
         var t = _collisionShape.GlobalTransform;
         var atLocal = t.AffineInverse() * at;

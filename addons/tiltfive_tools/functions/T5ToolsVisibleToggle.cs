@@ -1,7 +1,5 @@
 using Godot;
 
-#nullable enable
-
 public partial class T5ToolsVisibleToggle : Node
 {
     /// <summary>
@@ -28,13 +26,7 @@ public partial class T5ToolsVisibleToggle : Node
     /// <summary>
     /// Target node
     /// </summary>
-    private Node3D? _target;
-
-    /// <summary>
-    /// Wand number (0 for default)
-    /// </summary>
-    [Export]
-    public int Wand { get; set; }
+    private Node3D _target;
 
     /// <summary>
     /// Toggle button (T5 menu button for default)
@@ -46,7 +38,7 @@ public partial class T5ToolsVisibleToggle : Node
     /// Target node (null for parent)
     /// </summary>
     [Export]
-    public Node3D? Target { get; set; }
+    public Node3D Target { get; set; }
 
     /// <summary>
     /// Initial visibility
@@ -92,7 +84,7 @@ public partial class T5ToolsVisibleToggle : Node
     private void OnButtonPressed(StringName name)
     {
         // Toggle visibility if toggle button pressed
-        if (_target != null && name == ToggleButton)
+        if (name == ToggleButton)
             _target.Visible = !_target.Visible;
     }
 
@@ -100,7 +92,7 @@ public partial class T5ToolsVisibleToggle : Node
     /// Find the wand node
     /// </summary>
     /// <returns>Wand node or null</returns>
-    private T5ControllerCS? FindWand()
+    private T5ControllerCS FindWand()
     {
         // Find the player
         var player = FindPlayer();
@@ -108,7 +100,7 @@ public partial class T5ToolsVisibleToggle : Node
             return null;
 
         // Find the wand
-        var wandNode = player.Wand(Wand);
+        var wandNode = player.Wand;
         if (wandNode != null)
             return wandNode;
 
@@ -121,7 +113,7 @@ public partial class T5ToolsVisibleToggle : Node
     /// Find the associated player
     /// </summary>
     /// <returns>Player node or null</returns>
-    private T5ToolsPlayer? FindPlayer()
+    private T5ToolsPlayer FindPlayer()
     {
         // Test if this node is a child of a character
         var character = T5ToolsCharacter.FindInstance(this);

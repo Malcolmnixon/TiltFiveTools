@@ -1,29 +1,27 @@
 using Godot;
 
-#nullable enable
-
 public partial class T5ToolsFacePlayer : Node
 {
     /// <summary>
     /// Player camera
     /// </summary>
-    private T5CameraCS? _camera;
+    private T5CameraCS _camera;
 
     /// <summary>
     /// Player origin
     /// </summary>
-    private T5OriginCS? _origin;
+    private T5OriginCS _origin;
 
     /// <summary>
     /// Target node
     /// </summary>
-    private Node3D? _target;
+    private Node3D _target;
 
     /// <summary>
     /// Target node (null for parent)
     /// </summary>
     [Export]
-    public Node3D? Target { get; set; }
+    public Node3D Target { get; set; }
 
     /// <summary>
     /// Allow tilt
@@ -84,10 +82,6 @@ public partial class T5ToolsFacePlayer : Node
     /// <param name="weight">Slew weight [0=none .. 1=full]</param>
     private void TargetTransform(float weight)
     {
-        // Skip if nodes are invalid
-        if (_camera == null || _origin == null || _target == null)
-            return;
-
         // Get the camera position local to the target
         var dirLocal = _target.ToLocal(_camera.GlobalPosition);
         if (dirLocal.IsZeroApprox())
@@ -126,7 +120,7 @@ public partial class T5ToolsFacePlayer : Node
     /// Find the associated player
     /// </summary>
     /// <returns>Player node or null</returns>
-    private T5ToolsPlayer? FindPlayer()
+    private T5ToolsPlayer FindPlayer()
     {
         // Test if this node is a child of a character
         var character = T5ToolsCharacter.FindInstance(this);

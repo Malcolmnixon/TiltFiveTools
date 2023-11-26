@@ -1,14 +1,12 @@
 using System;
 using Godot;
 
-#nullable enable
-
 public partial class T5ToolsBoardScale : Node
 {
     /// <summary>
     /// Origin node
     /// </summary>
-    private T5OriginCS? _origin;
+    private T5OriginCS _origin;
 
     /// <summary>
     /// Button triggering zoom-in
@@ -46,7 +44,7 @@ public partial class T5ToolsBoardScale : Node
     public override void _Ready()
     {
         // Get the origin
-        _origin = T5ToolsPlayer.FindInstance(this)?.Origin;
+        _origin = T5ToolsPlayer.FindInstance(this).Origin;
 
         // Bind to the parent wand controller inputs
         var controller = GetParent<T5ControllerCS>();
@@ -59,10 +57,6 @@ public partial class T5ToolsBoardScale : Node
     /// <param name="name">Button name</param>
     private void OnButtonPressed(StringName name)
     {
-        // Ignore if no origin
-        if (_origin == null)
-            return;
-
         // Zoom in
         if (name == ZoomInButton)
         {

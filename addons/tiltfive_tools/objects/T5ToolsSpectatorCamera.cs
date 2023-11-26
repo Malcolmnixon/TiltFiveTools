@@ -1,7 +1,5 @@
 using Godot;
 
-#nullable enable
-
 public partial class T5ToolsSpectatorCamera : Camera3D
 {
     /// <summary>
@@ -66,7 +64,7 @@ public partial class T5ToolsSpectatorCamera : Camera3D
     /// Calculate the target (average of player origins)
     /// </summary>
     /// <returns>Target position</returns>
-    private Vector3 Target()
+    private static Vector3 Target()
     {
         // Get the players
         var players = T5ToolsStaging.Instance?.Players;
@@ -76,7 +74,7 @@ public partial class T5ToolsSpectatorCamera : Camera3D
         // Return the average of the origins
         var pos = Vector3.Zero;
         foreach (var player in players)
-            pos += player.Origin?.GlobalTransform.Origin ?? Vector3.Zero;
+            pos += player.Origin.GlobalTransform.Origin;
         return pos / players.Count;
     }
 }

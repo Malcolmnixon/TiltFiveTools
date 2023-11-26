@@ -1,7 +1,5 @@
 using Godot;
 
-#nullable enable
-
 /// <summary>
 /// Tilt Five Tools Pointer Event
 /// </summary>
@@ -47,7 +45,7 @@ public partial class T5ToolsPointerEvent : GodotObject
     /// <param name="target">Target</param>
     /// <param name="position">Position</param>
     /// <param name="lastPosition">Last position</param>
-    public T5ToolsPointerEvent(Type eventType, T5ToolsPlayer? player, Node3D pointer, Node3D target, Vector3 position, Vector3 lastPosition)
+    public T5ToolsPointerEvent(Type eventType, T5ToolsPlayer player, Node3D pointer, Node3D target, Vector3 position, Vector3 lastPosition)
     {
         EventType = eventType;
         Player = player;
@@ -65,7 +63,7 @@ public partial class T5ToolsPointerEvent : GodotObject
     /// <summary>
     /// Gets the player
     /// </summary>
-    public T5ToolsPlayer? Player { get; init; }
+    public T5ToolsPlayer Player { get; init; }
 
     /// <summary>
     /// Gets the pointer
@@ -94,7 +92,7 @@ public partial class T5ToolsPointerEvent : GodotObject
     /// <param name="pointer">Pointer</param>
     /// <param name="target">Target</param>
     /// <param name="at">Entered position</param>
-    public static void Entered(T5ToolsPlayer? player, Node3D pointer, Node3D target, Vector3 at)
+    public static void Entered(T5ToolsPlayer player, Node3D pointer, Node3D target, Vector3 at)
     {
         Report(
             new T5ToolsPointerEvent(
@@ -114,7 +112,7 @@ public partial class T5ToolsPointerEvent : GodotObject
     /// <param name="target">Target</param>
     /// <param name="to">To position</param>
     /// <param name="from">From position</param>
-    public static void Moved(T5ToolsPlayer? player, Node3D pointer, Node3D target, Vector3 to, Vector3 from)
+    public static void Moved(T5ToolsPlayer player, Node3D pointer, Node3D target, Vector3 to, Vector3 from)
     {
         Report(
             new T5ToolsPointerEvent(
@@ -133,7 +131,7 @@ public partial class T5ToolsPointerEvent : GodotObject
     /// <param name="pointer">Pointer</param>
     /// <param name="target">Target</param>
     /// <param name="at">Pressed position</param>
-    public static void Pressed(T5ToolsPlayer? player, Node3D pointer, Node3D target, Vector3 at)
+    public static void Pressed(T5ToolsPlayer player, Node3D pointer, Node3D target, Vector3 at)
     {
         Report(
             new T5ToolsPointerEvent(
@@ -152,7 +150,7 @@ public partial class T5ToolsPointerEvent : GodotObject
     /// <param name="pointer">Pointer</param>
     /// <param name="target">Target</param>
     /// <param name="at">Released position</param>
-    public static void Released(T5ToolsPlayer? player, Node3D pointer, Node3D target, Vector3 at)
+    public static void Released(T5ToolsPlayer player, Node3D pointer, Node3D target, Vector3 at)
     {
         Report(
             new T5ToolsPointerEvent(
@@ -171,7 +169,7 @@ public partial class T5ToolsPointerEvent : GodotObject
     /// <param name="pointer">Pointer</param>
     /// <param name="target">Target</param>
     /// <param name="last">Exited position</param>
-    public static void Exited(T5ToolsPlayer? player, Node3D pointer, Node3D target, Vector3 last)
+    public static void Exited(T5ToolsPlayer player, Node3D pointer, Node3D target, Vector3 last)
     {
         Report(
             new T5ToolsPointerEvent(

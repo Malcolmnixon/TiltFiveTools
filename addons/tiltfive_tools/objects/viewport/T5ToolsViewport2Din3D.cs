@@ -2,8 +2,6 @@ using System;
 using Godot;
 using Godot.Collections;
 
-#nullable enable
-
 /// <summary>
 /// Tilt Five Tools Viewport2Din3D
 /// </summary>
@@ -102,7 +100,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// <summary>
     /// Scene backing field
     /// </summary>
-    private PackedScene? _scene;
+    private PackedScene _scene;
 
     /// <summary>
     /// Viewport size backing field
@@ -122,7 +120,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// <summary>
     /// Custom material template backing field
     /// </summary>
-    private StandardMaterial3D? _material;
+    private StandardMaterial3D _material;
 
     /// <summary>
     /// Transparent mode backing field
@@ -147,12 +145,12 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// <summary>
     /// Current scene node
     /// </summary>
-    private Node? _sceneNode;
+    private Node _sceneNode;
 
     /// <summary>
     /// Viewport texture
     /// </summary>
-    private ViewportTexture? _viewportTexture;
+    private ViewportTexture _viewportTexture;
 
     /// <summary>
     /// Time since the last update
@@ -162,42 +160,42 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// <summary>
     /// Screen material
     /// </summary>
-    private StandardMaterial3D? _screenMaterial;
+    private StandardMaterial3D _screenMaterial;
 
     /// <summary>
     /// Viewport instance
     /// </summary>
-    private SubViewport? _viewport;
+    private SubViewport _viewport;
 
     /// <summary>
     /// Screen mesh instance
     /// </summary>
-    private MeshInstance3D? _screenMesh;
+    private MeshInstance3D _screenMesh;
 
     /// <summary>
     /// Screen quad mesh
     /// </summary>
-    private QuadMesh? _screenQuadMesh;
+    private QuadMesh _screenQuadMesh;
 
     /// <summary>
     /// Screen body
     /// </summary>
-    private T5ToolsViewport2Din3DBody? _screenBody;
+    private T5ToolsViewport2Din3DBody _screenBody;
 
     /// <summary>
     /// Screen collision shape
     /// </summary>
-    private CollisionShape3D? _screenShape;
+    private CollisionShape3D _screenShape;
 
     /// <summary>
     /// Screen box shape
     /// </summary>
-    private BoxShape3D? _screenBoxShape;
+    private BoxShape3D _screenBoxShape;
 
     /// <summary>
     /// Owning player (null if global)
     /// </summary>
-    private T5ToolsPlayer? _player;
+    private T5ToolsPlayer _player;
 
     /// <summary>
     /// Dirty flags
@@ -236,7 +234,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// </summary>
     [ExportGroup("Content")]
     [Export]
-    public PackedScene? Scene
+    public PackedScene Scene
     {
         get => _scene;
         set => SetScene(value);
@@ -284,7 +282,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// Custom material template
     /// </summary>
     [Export]
-    public StandardMaterial3D? Material
+    public StandardMaterial3D Material
     {
         get => _material;
         set => SetMaterial(value);
@@ -339,16 +337,15 @@ public partial class T5ToolsViewport2Din3D : Node3D
         _screenMesh = GetNode<MeshInstance3D>("Screen");
         _screenBody = GetNode<T5ToolsViewport2Din3DBody>("StaticBody3D");
         _screenShape = GetNode<CollisionShape3D>("StaticBody3D/CollisionShape3D");
-        _screenQuadMesh = _screenMesh?.Mesh as QuadMesh;
-        _screenBoxShape = _screenShape?.Shape as BoxShape3D;
+        _screenQuadMesh = _screenMesh.Mesh as QuadMesh;
+        _screenBoxShape = _screenShape.Shape as BoxShape3D;
 
         // Test if the viewport is under a player
         _player = T5ToolsPlayer.FindInstance(this);
 
         // Listen for pointer events on the screen body
         var body = GetNode<T5ToolsViewport2Din3DBody>("StaticBody3D");
-        if (body != null)
-            body.PointerEvent += OnPointerEvent;
+        body.PointerEvent += OnPointerEvent;
 
         // Update enabled based on visibility
         VisibilityChanged += UpdateEnabled;
@@ -431,7 +428,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// Get the 2D scene instance
     /// </summary>
     /// <returns>2D scene instance</returns>
-    public Node? GetSceneInstance() => _sceneNode;
+    public Node GetSceneInstance() => _sceneNode;
 
     /// <summary>
     /// Connect a 2D scene signal
@@ -459,17 +456,13 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// <param name="event">Input event</param>
     public override void _Input(InputEvent @event)
     {
-        if (_viewport != null && @event is not InputEventMouseButton)
+        if (@event is not InputEventMouseButton)
             _viewport.PushInput(@event);
     }
 
     public override void _Process(double delta)
     {
         base._Process(delta);
-
-        // Skip on invalid nodes
-        if (_viewport == null)
-            return;
 
         // Process screen refreshing
         if (Engine.IsEditorHint())
@@ -527,7 +520,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// Handle setting scene property
     /// </summary>
     /// <param name="scene">New scene</param>
-    private void SetScene(PackedScene? scene)
+    private void SetScene(PackedScene scene)
     {
         _scene = scene;
         _dirty |= Dirty.Scene;
@@ -575,7 +568,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// Handle setting material property
     /// </summary>
     /// <param name="material">New material</param>
-    private void SetMaterial(StandardMaterial3D? material)
+    private void SetMaterial(StandardMaterial3D material)
     {
         _material = material;
         NotifyPropertyListChanged();
@@ -638,17 +631,9 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// </summary>
     private void UpdateScreenSize()
     {
-        // Update the screen quad-mesh
-        if (_screenQuadMesh != null)
-            _screenQuadMesh.Size = _screenSize;
-
-        // Update the screen body
-        if (_screenBody != null)
-            _screenBody.ScreenSize = _screenSize;
-
-        // Update the collision shape
-        if (_screenBoxShape != null)
-            _screenBoxShape.Size = new Vector3(_screenSize.X, _screenSize.Y, 0.02f);
+        _screenQuadMesh.Size = _screenSize;
+        _screenBody.ScreenSize = _screenSize;
+        _screenBoxShape.Size = new Vector3(_screenSize.X, _screenSize.Y, 0.02f);
     }
 
     /// <summary>
@@ -661,8 +646,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
             return;
 
         // Update the screen shape disabled flag
-        if (_screenShape != null)
-            _screenShape.Disabled = !IsVisibleInTree();
+        _screenShape.Disabled = !IsVisibleInTree();
     }
 
     /// <summary>
@@ -680,8 +664,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
             layer |= _player.GetPlayerPhysicsLayer();
 
         // Update the collision layer
-        if (_screenBody != null)
-            _screenBody.CollisionLayer = layer;
+        _screenBody.CollisionLayer = layer;
     }
 
     /// <summary>
@@ -699,8 +682,7 @@ public partial class T5ToolsViewport2Din3D : Node3D
             layers |= _player.GetPlayerVisibleLayer();
 
         // Update the visible layers
-        if (_screenMesh != null)
-            _screenMesh.Layers = layers;
+        _screenMesh.Layers = layers;
     }
 
     /// <summary>
@@ -708,10 +690,6 @@ public partial class T5ToolsViewport2Din3D : Node3D
     /// </summary>
     private void UpdateRender()
     {
-        // Skip on invalid fields
-        if (_viewport == null || _screenMesh == null || _screenBody == null)
-            return;
-
         // Handle material change
         if (_dirty.HasFlag(Dirty.Material))
         {
