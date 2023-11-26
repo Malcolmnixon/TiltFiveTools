@@ -88,7 +88,7 @@ public partial class T5ToolsRigidBodyController : RigidBody3D
     /// <summary>
     /// Camera node
     /// </summary>
-    private Camera3D? _camera;
+    private T5CameraCS? _camera;
 
     /// <summary>
     /// Control vector
@@ -164,11 +164,11 @@ public partial class T5ToolsRigidBodyController : RigidBody3D
     {
         // Get the player
         _player = T5ToolsCharacter.FindInstance(this)?.Player;
-        _origin = _player?.GetPlayerOrigin();
-        _camera = _player?.GetPlayerCamera();
+        _origin = _player?.Origin;
+        _camera = _player?.Camera;
 
         // Subscribe to player wand events
-        var controller = _player?.GetPlayerWand(0);
+        var controller = _player?.Wand(0);
         controller?.Connect("button_pressed", Callable.From((StringName name) => OnButtonPressed(name)));
         controller?.Connect("button_released", Callable.From((StringName name) => OnButtonReleased(name)));
         controller?.Connect("input_vector2_changed", Callable.From((StringName name, Vector2 value) => OnInputVector2Changed(name, value)));

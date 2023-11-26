@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Godot;
 
@@ -131,15 +131,15 @@ public partial class T5ToolsStaging : Node3D
         base._Ready();
 
         // Save nodes
-        _fadeMesh = GetNodeOrNull<MeshInstance3D>("Fade");
-        _scene = GetNodeOrNull<Node3D>("Scene");
+        _fadeMesh = GetNode<MeshInstance3D>("Fade");
+        _scene = GetNode<Node3D>("Scene");
 
         // Do not initialise if in the editor
         if (Engine.IsEditorHint())
             return;
 
         // Connect T5Manager signals
-        var manager = GetNodeOrNull<T5Manager>("T5Manager");
+        var manager = GetNode<T5Manager>("T5Manager");
         if (manager != null)
         {
             manager.XRRigWasAdded += OnXRRigWasAdded;
@@ -187,12 +187,8 @@ public partial class T5ToolsStaging : Node3D
 
             // Zero all player origins. The new scene can choose to relocate
             // but its safest to just zero in case
-            foreach (var player in Players)
-            {
-                var origin = player.GetPlayerOrigin();
-                if (origin != null)
-                    origin.GlobalTransform = Transform3D.Identity;
-            }
+            foreach (var origin in Players.Select(p => p.Origin))
+                origin.GlobalTransform = Transform3D.Identity;
         }
 
         // Load the new scene

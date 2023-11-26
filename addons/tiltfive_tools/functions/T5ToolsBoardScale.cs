@@ -46,10 +46,10 @@ public partial class T5ToolsBoardScale : Node
     public override void _Ready()
     {
         // Get the origin
-        _origin = T5ToolsPlayer.FindInstance(this)?.GetPlayerOrigin();
+        _origin = T5ToolsPlayer.FindInstance(this)?.Origin;
 
         // Bind to the parent wand controller inputs
-        var controller = GetParentOrNull<T5ControllerCS>();
+        var controller = GetParent<T5ControllerCS>();
         controller?.Connect("button_pressed", Callable.From((StringName name) => OnButtonPressed(name)));
     }
 

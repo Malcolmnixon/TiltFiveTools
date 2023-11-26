@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class T5Manager : Node3D, T5ManagerInterface
+public partial class T5Manager : Node, T5ManagerInterface
 {
 	[Signal]
 	public delegate void XRRigWasAddedEventHandler(T5XRRig rig);
@@ -91,7 +91,7 @@ public partial class T5Manager : Node3D, T5ManagerInterface
 			origin.Transform = startLocation.Transform;
 			if(startLocation.IsClass("T5Gameboard")) { 
 				var contentScale = startLocation.Get("content_scale").As<float>();
-				origin.Set( "gameboard_scale", contentScale);
+				origin.Set("gameboard_scale", contentScale);
 			}
 		}
 		EmitSignal(SignalName.XRRigWasAdded, newRig);

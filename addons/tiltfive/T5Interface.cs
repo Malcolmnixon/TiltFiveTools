@@ -99,13 +99,13 @@ public partial class T5Interface : Node
 	void StartDisplay(string glassesID, T5XRRig xrRig) {
 		
 		xrInterface.Call("start_display", glassesID, xrRig, xrRig.Origin);
-		xrRig.Camera.Set("tracker", $"/user/{glassesID}/head");
+		xrRig.Camera.Tracker = $"/user/{glassesID}/head";
 		for(int i = 0; i < 4; i++)
 		{
 			var wand = xrRig.Wand(i);
 			if (wand != null)
 			{
-				wand.Set("tracker", $"/user/{glassesID}/wand_{i + 1}");
+				wand.Tracker = $"/user/{glassesID}/wand_{i + 1}";
 			}
 		}
 	}

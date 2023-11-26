@@ -7,7 +7,7 @@ public partial class T5ToolsFacePlayer : Node
     /// <summary>
     /// Player camera
     /// </summary>
-    private Camera3D? _camera;
+    private T5CameraCS? _camera;
 
     /// <summary>
     /// Player origin
@@ -62,8 +62,8 @@ public partial class T5ToolsFacePlayer : Node
             return;
 
         // Get the camera and origin
-        _camera = player.GetPlayerCamera();
-        _origin = player.GetPlayerOrigin();
+        _camera = player.Camera;
+        _origin = player.Origin;
 
         // Perform the initial facing
         TargetTransform(1.0f);

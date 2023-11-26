@@ -76,7 +76,7 @@ public partial class T5ToolsSpectatorCamera : Camera3D
         // Return the average of the origins
         var pos = Vector3.Zero;
         foreach (var player in players)
-            pos += player.GetPlayerOrigin()?.GlobalTransform.Origin ?? Vector3.Zero;
+            pos += player.Origin?.GlobalTransform.Origin ?? Vector3.Zero;
         return pos / players.Count;
     }
 }

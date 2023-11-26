@@ -108,7 +108,7 @@ public partial class T5ToolsVisibleToggle : Node
             return null;
 
         // Find the wand
-        var wandNode = player.GetPlayerWand(Wand);
+        var wandNode = player.Wand(Wand);
         if (wandNode != null)
             return wandNode;
 

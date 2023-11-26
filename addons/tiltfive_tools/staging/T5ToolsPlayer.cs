@@ -18,7 +18,7 @@ public partial class T5ToolsPlayer : T5XRRig
 	/// <summary>
 	/// All players list
 	/// </summary>
-	private static readonly List<T5ToolsPlayer> _players = new();
+	private static readonly List<T5ToolsPlayer> Players = new();
 
 	// Visible layers
 	private uint _visibleLayers = 5;
@@ -55,14 +55,14 @@ public partial class T5ToolsPlayer : T5XRRig
 
 		// Assign the next free player number
 		for (var n = 0; n < 4; ++n)
-			if (_players.All(p => p._playerNumber != n))
+			if (Players.TrueForAll(p => p._playerNumber != n))
 			{
 				_playerNumber = n;
 				break;
 			}
 
 		// Save as a player
-		_players.Add(this);
+		Players.Add(this);
     }
 
 	/// <summary>
@@ -73,7 +73,7 @@ public partial class T5ToolsPlayer : T5XRRig
         base._ExitTree();
 
 		// Remove from the list of players
-		_players.Remove(this);
+		Players.Remove(this);
     }
 
     /// <summary>
@@ -84,43 +84,6 @@ public partial class T5ToolsPlayer : T5XRRig
 		base._Ready();
 
 		UpdateCameraCullMask();
-	}
-
-	/// <summary>
-	/// Get the player viewport
-	/// </summary>
-	/// <returns>Player Viewport</returns>
-	public SubViewport GetPlayerViewport()
-	{
-		return this;
-	}
-
-	/// <summary>
-	/// Get the player origin
-	/// </summary>
-	/// <returns>Player origin</returns>
-	public T5OriginCS? GetPlayerOrigin()
-	{
-		return GetNodeOrNull<T5OriginCS>("Origin");
-	}
-
-	/// <summary>
-	/// Get the player camera
-	/// </summary>
-	/// <returns>Player camera</returns>
-	public Camera3D? GetPlayerCamera()
-	{
-		return GetNodeOrNull<Camera3D>("Origin/Camera");
-	}
-
-	/// <summary>
-	/// Get the player wand
-	/// </summary>
-	/// <param name="wandNum">Wand number [0..3]</param>
-	/// <returns>Player wand</returns>
-	public T5ControllerCS? GetPlayerWand(int wandNum)
-	{
-		return GetNodeOrNull<T5ControllerCS>($"Origin/Wand_{wandNum + 1}");
 	}
 
 	/// <summary>
@@ -211,8 +174,6 @@ public partial class T5ToolsPlayer : T5XRRig
 	{
 		// Set the camera cull mask to see the selected visible layers as well as
 		// the layer specific to this player.
-		var camera = GetPlayerCamera();
-		if (camera != null)
-			camera.CullMask = _visibleLayers | GetPlayerVisibleLayer();
+		Camera.CullMask = _visibleLayers | GetPlayerVisibleLayer();
 	}
 }

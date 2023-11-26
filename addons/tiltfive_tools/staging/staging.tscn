@@ -34,7 +34,7 @@ script = ExtResource("1_x524t")
 mesh = SubResource("QuadMesh_soj17")
 surface_material_override/0 = SubResource("ShaderMaterial_rf1gh")
 
-[node name="T5Manager" type="Node3D" parent="."]
+[node name="T5Manager" type="Node" parent="."]
 script = ExtResource("2_1ijo2")
 
 [node name="Scene" type="Node3D" parent="."]

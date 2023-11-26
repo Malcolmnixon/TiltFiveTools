@@ -19,6 +19,7 @@ public partial class plugin : EditorPlugin
 
 	public override void _EnterTree()
 	{
+		T5ProjectSettings.setup_properties();
 		Setup();
 
 	}
